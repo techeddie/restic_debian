@@ -13,11 +13,11 @@ touch -p ~/.restic/logging.txt
 # configs 
 
 ```bash
-export AWS_ACCESS_KEY_ID=<key>
+export AWS_ACCESS_KEY_ID=<id>
 export AWS_SECRET_ACCESS_KEY=<key>
 export RESTIC_REPOSITORY=s3:contoso.com/bucket
 export RESTIC_COMPRESSION=max
-export RESTIC_PASSWORD='7347894768947698457896'
+export RESTIC_PASSWORD=<password>
 
 export SOURCEDIR=/etc/
 export EXCLUDE=~/.restic/excludes.txt
@@ -70,4 +70,11 @@ restic snapshots --verbose \
 /usr/bin/cat "$LOGFILE"
 exit 0
 
+```
+# create crontab job
+```bash
+crontab -e
+
+#restic daily s3 backup
+00 12 * * * root bash /root/.restic/s3.backup
 ```
