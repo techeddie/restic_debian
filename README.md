@@ -4,10 +4,10 @@
 apt install moreutils -y
 
 mkdir -p ~/.restic/
-touch -p ~/.restic/s3.backup
-touch -p ~/.restic/env.s3-config
-touch -p ~/.restic/excludes.txt
-touch -p ~/.restic/logging.txt
+touch ~/.restic/s3.backup
+touch ~/.restic/env.s3-config
+touch ~/.restic/excludes.txt
+touch ~/.restic/logging.txt
 ```
 
 # configs 
