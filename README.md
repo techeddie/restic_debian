@@ -1,5 +1,4 @@
 # preparations
-
 ```bash
 apt install moreutils -y
 
@@ -13,14 +12,12 @@ chmod +x ~/.restic/s3.backup
 cd ~/.restic/
 ```
 
-
+# environment config
 ```bash
 #choose your editor to edit env file
 nvim ~/.restic/env.s3-config
 nano ~/.restic/env.s3-config
 ```
-
-# configs 
 
 ```bash
 export AWS_ACCESS_KEY_ID=<id>
@@ -32,7 +29,6 @@ export RESTIC_PASSWORD=<password>
 export SOURCEDIR=/etc/
 export EXCLUDE=~/.restic/excludes.txt
 export LOGFILE=~/.restic/logging.log
-
 ```
 
 ```bash
@@ -85,4 +81,10 @@ restic snapshots --verbose \
 
 cat "$LOGFILE"
 exit 0
+```
+
+# crontab job
+```bash
+crontab -e
+00 12 * * * <username> bash ~/.restic/s3.backup
 ```
