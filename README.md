@@ -7,7 +7,10 @@ mkdir -p ~/.restic/
 touch ~/.restic/s3.backup
 touch ~/.restic/env.s3-config
 touch ~/.restic/excludes.txt
-touch ~/.restic/logging.txt
+touch ~/.restic/logging.log
+chmod +x ~/.restic/s3.backup
+
+cd ~/.restic/
 ```
 
 
@@ -29,6 +32,7 @@ export RESTIC_PASSWORD=<password>
 export SOURCEDIR=/etc/
 export EXCLUDE=~/.restic/excludes.txt
 export LOGFILE=~/.restic/logging.log
+
 ```
 
 ```bash
@@ -53,18 +57,18 @@ restic unlock || true
 
 # backup durchführen
 restic backup "$SOURCEDIR" \
-│ --exclude-file "$EXCLUDE" \
-│ --tag configs --verbose \
-│ 2>&1 | ts '[%Y-%m-%d %H:%M:%S]' | tee -a "$LOGFILE"
+  --exclude-file "$EXCLUDE" \
+  --tag configs --verbose \
+  2>&1 | ts '[%Y-%m-%d %H:%M:%S]' | tee -a "$LOGFILE"
 
 # retention policy
 restic forget \
-│ --keep-daily 30 \
-│ --keep-weekly 52 \
-│ --keep-monthly 120 \
-│ --keep-yearly 5 \
-│ --prune \
-│ 2>&1 | ts '[%Y-%m-%d %H:%M:%S]' | tee -a "$LOGFILE"
+  --keep-daily 30 \
+  --keep-weekly 52 \
+  --keep-monthly 120 \
+  --keep-yearly 5 \
+  --prune \
+  2>&1 | ts '[%Y-%m-%d %H:%M:%S]' | tee -a "$LOGFILE"
 
 sleep 3
 
@@ -74,19 +78,11 @@ restic cache --cleanup
 
 # snapshots anzeigen und loggen
 restic snapshots --verbose \
-│ 2>&1 | ts '[%Y-%m-%d %H:%M:%S]' | tee -a "$LOGFILE"
+  2>&1 | ts '[%Y-%m-%d %H:%M:%S]' | tee -a "$LOGFILE"
 
 # optional: integrity check (empfohlen wöchentlich per cron)
 # restic check --verbose 2>&1 | ts '[%Y-%m-%d %H:%M:%S]' | tee -a "$LOGFILE"
 
-/usr/bin/cat "$LOGFILE"
+cat "$LOGFILE"
 exit 0
-
-```
-# create crontab job
-```bash
-crontab -e
-
-#restic daily s3 backup
-00 12 * * * root bash /root/.restic/s3.backup
 ```
