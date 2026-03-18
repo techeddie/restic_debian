@@ -86,5 +86,9 @@ exit 0
 # crontab job
 ```bash
 crontab -e
-00 12 * * * <username> bash ~/.restic/s3.backup
+00 12 * * * bash ~/.restic/s3.backup
 ```
+
+# read log file
+```bash
+tail -fn 20 ~/.restic/logging.log
