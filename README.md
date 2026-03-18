@@ -10,6 +10,13 @@ touch ~/.restic/excludes.txt
 touch ~/.restic/logging.txt
 ```
 
+
+```bash
+#choose your editor to edit env file
+nvim ~/.restic/env.s3-config
+nano ~/.restic/env.s3-config
+```
+
 # configs 
 
 ```bash
@@ -24,6 +31,11 @@ export EXCLUDE=~/.restic/excludes.txt
 export LOGFILE=~/.restic/logging.log
 ```
 
+```bash
+#choose your editor to edit backup file
+nvim ~/.restic/s3.backup
+nano ~/.restic/s3.backup
+```
 
 # backup script
 ```bash
