@@ -46,7 +46,12 @@ set -e
 source ~/.restic/env.s3-config
 
 # Variablen prüfen
-: "${SOURCEDIR:?Variable SOURCEDIR nicht gesetzt}"
+if [ -z "$SOURCEDIR" ] && [ -z "$FILES_FROM" ]; then
+  echo "Fehler: Weder SOURCEDIR noch FILES_FROM gesetzt"
+  exit 1
+fi
+: "${EXCLUDE:?Variable EXCLUDE nicht gesetzt}"
+: "${LOGFILE:?Variable LOGFILE nicht gesetzt}"
 : "${EXCLUDE:?Variable EXCLUDE nicht gesetzt}"
 : "${LOGFILE:?Variable LOGFILE nicht gesetzt}"
 
@@ -54,16 +59,17 @@ source ~/.restic/env.s3-config
 restic unlock || true
 
 # backup durchführen
-restic backup "$SOURCEDIR" \
-  --exclude-file "$EXCLUDE" \
-  --tag configs --verbose \
-  2>&1 | ts '[%Y-%m-%d %H:%M:%S]' | tee -a "$LOGFILE"
-
-# # backup durchführen (read sources file)
-# restic backup --files-from  "$FILES_FROM" \
-#   --exclude-file "$EXCLUDE" \
-#   --tag configs --verbose \
-#   2>&1 | ts '[%Y-%m-%d %H:%M:%S]' | tee -a "$LOGFILE"
+if [ -n "$FILES_FROM" ]; then
+  restic backup --files-from "$FILES_FROM" \
+    --exclude-file "$EXCLUDE" \
+    --tag configs --verbose \
+    2>&1 | ts '[%Y-%m-%d %H:%M:%S]' | tee -a "$LOGFILE"
+else
+  restic backup "$SOURCEDIR" \
+    --exclude-file "$EXCLUDE" \
+    --tag configs --verbose \
+    2>&1 | ts '[%Y-%m-%d %H:%M:%S]' | tee -a "$LOGFILE"
+fi
 
 # retention policy
 restic forget \
@@ -89,6 +95,8 @@ restic snapshots --verbose \
 
 cat "$LOGFILE"
 exit 0
+
+
 ```
 
 # crontab job
