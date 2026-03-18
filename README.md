@@ -33,13 +33,13 @@ export EXCLUDE=~/.restic/excludes.txt
 export LOGFILE=~/.restic/logging.log
 ```
 
+# backup script
 ```bash
 #choose your editor to edit backup file
 nvim ~/.restic/s3.backup
 nano ~/.restic/s3.backup
 ```
 
-# backup script
 ```bash
 #
 set -e
@@ -95,8 +95,6 @@ restic snapshots --verbose \
 
 cat "$LOGFILE"
 exit 0
-
-
 ```
 
 # crontab job
