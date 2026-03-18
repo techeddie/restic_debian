@@ -6,6 +6,7 @@ mkdir -p ~/.restic/
 touch ~/.restic/s3.backup
 touch ~/.restic/env.s3-config
 touch ~/.restic/excludes.txt
+touch ~/.restic/sources.txt
 touch ~/.restic/logging.log
 chmod +x ~/.restic/s3.backup
 
@@ -27,6 +28,7 @@ export RESTIC_COMPRESSION=max
 export RESTIC_PASSWORD=<password>
 
 export SOURCEDIR=/etc/
+# export FILES_FROM=~/.restic/sources.txt
 export EXCLUDE=~/.restic/excludes.txt
 export LOGFILE=~/.restic/logging.log
 ```
@@ -56,6 +58,12 @@ restic backup "$SOURCEDIR" \
   --exclude-file "$EXCLUDE" \
   --tag configs --verbose \
   2>&1 | ts '[%Y-%m-%d %H:%M:%S]' | tee -a "$LOGFILE"
+
+# # backup durchführen (read sources file)
+# restic backup --files-from  "$FILES_FROM" \
+#   --exclude-file "$EXCLUDE" \
+#   --tag configs --verbose \
+#   2>&1 | ts '[%Y-%m-%d %H:%M:%S]' | tee -a "$LOGFILE"
 
 # retention policy
 restic forget \
