@@ -36,7 +36,7 @@ chmod +x ~/.restic/s3.backup
 
 ## configuration
 
-### Environment (`~/.restic/env.s3-config`)
+### environment (`~/.restic/env.s3-config`)
 
 ```bash
 export AWS_ACCESS_KEY_ID=<id>
@@ -57,7 +57,7 @@ export LOGFILE=~/.restic/logging.log
 
 > Use either `SOURCEDIR` or `FILES_FROM`, not both.
 
-### Sources (`~/.restic/sources.txt`)
+### sources (`~/.restic/sources.txt`)
 
 Only needed when using `FILES_FROM`. Use full paths:
 
@@ -67,7 +67,7 @@ Only needed when using `FILES_FROM`. Use full paths:
 /etc/
 ```
 
-### Excludes (`~/.restic/excludes.txt`)
+### excludes (`~/.restic/excludes.txt`)
 
 ```
 *.tmp
@@ -76,7 +76,7 @@ node_modules
 .Trash
 ```
 
-## Backup Script (`~/.restic/s3.backup`)
+## BACKUP SCRIPT (`~/.restic/s3.backup`)
 
 ```bash
 #!/bin/bash
@@ -133,7 +133,7 @@ cat "$LOGFILE"
 exit 0
 ```
 
-## Cron
+## cron
 
 ```bash
 crontab -e
