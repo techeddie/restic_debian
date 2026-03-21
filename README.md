@@ -14,7 +14,7 @@ bunzip2 restic_${VER}_linux_amd64.bz2
 
 # make it executable
 chmod +x restic_${VER}_linux_amd64
-sudo mv restic_${VER}_linux_amd64 /usr/local/bin/restic
+sudo mv restic_${VER}_linux_amd64 /usr/bin/restic
 
 # check version
 restic version
