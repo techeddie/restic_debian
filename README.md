@@ -1,14 +1,50 @@
-# Restic S3 Backup
+# RESTIC S3 BACKUP
 
 Automated backup script for restic with S3-compatible storage, including retention policy, logging, and cron scheduling.
 
-## Prerequisites
+## install restic
 
 ```bash
 apt install moreutils -y
+
+# download current version
+VER=$(curl -s https://api.github.com/repos/restic/restic/releases/latest | grep -oP '"tag_name": "v\K[^"]+')
+wget https://github.com/restic/restic/releases/download/v${VER}/restic_${VER}_linux_amd64.bz2
+
+# extract
+bunzip2 restic_${VER}_linux_amd64.bz2
+
+# make it executable
+chmod +x restic_${VER}_linux_amd64
+sudo mv restic_${VER}_linux_amd64 /usr/local/bin/restic
+
+# check version
+restic version
 ```
 
-## Setup
+# prerequisites
+
+```bash
+apt install moreutils -y
+
+# Aktuelle Version herunterladen
+VER=$(curl -s https://api.github.com/repos/restic/restic/releases/latest | grep -oP '"tag_name": "v\K[^"]+')
+wget https://github.com/restic/restic/releases/download/v${VER}/restic_${VER}_linux_amd64.bz2
+
+# Entpacken
+bunzip2 restic_${VER}_linux_amd64.bz2
+
+# Ausführbar machen und verschieben
+chmod +x restic_${VER}_linux_amd64
+sudo mv restic_${VER}_linux_amd64 /usr/local/bin/restic
+
+# Prüfen
+restic version
+
+
+```
+
+## setup
 
 ```bash
 mkdir -p ~/.restic/
@@ -16,7 +52,7 @@ touch ~/.restic/{s3.backup,env.s3-config,excludes.txt,sources.txt,logging.log}
 chmod +x ~/.restic/s3.backup
 ```
 
-## Configuration
+## configuration
 
 ### Environment (`~/.restic/env.s3-config`)
 
@@ -125,7 +161,7 @@ crontab -e
 00 12 * * * bash ~/.restic/s3.backup
 ```
 
-## Useful Commands
+## USEFUL COMMANDS
 
 ```bash
 # follow log
