@@ -5,8 +5,6 @@ Automated backup script for restic with S3-compatible storage, including retenti
 ## install restic
 
 ```bash
-apt install moreutils -y
-
 # download current version
 VER=$(curl -s https://api.github.com/repos/restic/restic/releases/latest | grep -oP '"tag_name": "v\K[^"]+')
 wget https://github.com/restic/restic/releases/download/v${VER}/restic_${VER}_linux_amd64.bz2
@@ -26,22 +24,6 @@ restic version
 
 ```bash
 apt install moreutils -y
-
-# Aktuelle Version herunterladen
-VER=$(curl -s https://api.github.com/repos/restic/restic/releases/latest | grep -oP '"tag_name": "v\K[^"]+')
-wget https://github.com/restic/restic/releases/download/v${VER}/restic_${VER}_linux_amd64.bz2
-
-# Entpacken
-bunzip2 restic_${VER}_linux_amd64.bz2
-
-# Ausführbar machen und verschieben
-chmod +x restic_${VER}_linux_amd64
-sudo mv restic_${VER}_linux_amd64 /usr/local/bin/restic
-
-# Prüfen
-restic version
-
-
 ```
 
 ## setup
